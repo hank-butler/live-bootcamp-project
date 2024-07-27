@@ -3,7 +3,8 @@ use axum::{routing::post, serve::Serve, Router};
 use routes::{login, logout, signup, verify_2fa, verify_token};
 use tower_http::services::ServeDir;
 
-mod routes;
+
+pub mod routes;
 
 
 pub struct Application {
