@@ -15,13 +15,13 @@ impl UserStore for HashmapUserStore {
         if self.users.contains_key(&user.email) {
             return Err(UserStoreError::UserAlreadyExists);
         }
-        self.users.insert(user.email.clone(), v: user);
+        self.users.insert(user.email.clone(), user);
         Ok(())
     }
 
     async fn get_user(&self, email: &Email) -> Result<User, UserStoreError> {
         match self.users.get(email) {
-            Some(user: &User) => Ok(user.clone()),
+            Some(&User) => Ok(user.clone()),
             None => Err(UserStoreError::UserNotFound),
         }
     }
@@ -30,7 +30,7 @@ impl UserStore for HashmapUserStore {
     email: &Email,
     password: &Password) -> Result<(), UserStoreError> {
         match self.users.get(email) {
-            Some(user: &User) => {
+            Some(&User) => {
                 if user.password.eq(password) {
                     Ok(())
                 } else {
